@@ -60,6 +60,21 @@ document.getElementById("btnLogin").onclick = async () => {
 </script>
   <script src="auth.js"></script>
 
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  const SUPABASE_URL = "https://qwyoidlplqwijjskefuk.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF3eW9pZGxwbHF3aWpqc2tlZnVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5MDI2OTIsImV4cCI6MjA3NzQ3ODY5Mn0.AUEvo6_Y2BjDv_rB6OI0OiDZcHqMeQEpiC1MuVN2RcA";
+
+  const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // ✅ Si Supabase renvoie un token dans l'URL après email
+  client.auth.onAuthStateChange((event, session) => {
+    if (event === "SIGNED_IN") {
+      window.location.href = "dashboard.html";
+    }
+  });
+</script>
 
 </body>
 </html>
