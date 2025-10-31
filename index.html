@@ -1,131 +1,758 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kawaka Living — Séjour d'exception à Bouaké</title>
+<!doctype html>
+<html lang="fr" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interface Akwaba Living - Bouaké</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #fff;
-      color: #000;
-    }
-    header {
-      background: #000;
-      color: #d4af37;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    nav a {
-      color: #d4af37;
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: 500;
-    }
-    .hero {
-      background: url('https://source.unsplash.com/featured/?luxury,hotel,interior') center/cover no-repeat;
-      color: #fff;
-      height: 80vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 40px;
-      background-color: #000;
-    }
-    .hero h1 {
-      font-size: 48px;
-      margin: 0;
-      color: #d4af37;
-    }
-    .hero p {
-      font-size: 22px;
-      max-width: 500px;
-    }
-    .cta-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background: #d4af37;
-      color: #000;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 4px;
-    }
-    .section {
-      padding: 60px 40px;
-    }
-    .properties-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .property-card {
-      border: 1px solid #eee;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .property-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-    .property-info {
-      padding: 15px;
-    }
-    .status {
-      font-weight: bold;
-    }
-    .status.free { color: green; }
-    .status.occupied { color: red; }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo"><strong>Kawaka Living</strong></div>
-    <nav>
-      <a href="#catalogue">Catalogue</a>
-      <a href="#paiement">Paiements</a>
-      <a href="https://wa.me/2270788033535" target="_blank">WhatsApp</a>
-    </nav>
-  </header>
+        body {
+            box-sizing: border-box;
+            position: relative;
+        }
+        
+        /* Fond optimisé pour Bouaké */
+        .bouake-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        /* Overlay simplifié */
+        .content-overlay {
+            position: relative;
+            background: #f9fafb;
+        }
+        
+        .property-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: #ffffff;
+        }
+        .property-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .filter-btn.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        /* Header optimisé */
+        header {
+            background: #ffffff;
+        }
+        
+        /* Panneau de filtres optimisé */
+        #filter-panel {
+            background: #ffffff;
+        }
 
-  <section class="hero">
-    <h1>Séjour d'exception à Bouaké</h1>
-    <p>Résidences meublées et suites luxueuses pour un confort inégalé dans les meilleurs quartiers de Bouaké.</p>
-    <a href="https://wa.me/2270788033535" class="cta-button" target="_blank">Réserver via WhatsApp</a>
-  </section>
-
-  <section class="section" id="catalogue">
-    <h2>Biens disponibles</h2>
-    <div class="properties-grid">
-      <div class="property-card">
-        <img src="https://source.unsplash.com/featured/?luxury,apartment" alt="Résidence luxe">
-        <div class="property-info">
-          <h3>Suite Prestige — Belleville</h3>
-          <p class="status free">Libre</p>
-        </div>
+        /* Styles pour la carte */
+        .property-marker {
+            z-index: 10;
+        }
+        
+        .property-marker:hover {
+            z-index: 20;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gray-50"><!-- Fond avec symboles de Bouaké -->
+  <div class="bouake-background"></div>
+  <div class="min-h-full content-overlay"><!-- Header avec recherche -->
+   <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6"><!-- Barre de recherche principale -->
+     <div class="mb-6">
+      <div class="relative max-w-2xl mx-auto">
+       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <svg class="h-5 w-5 text-gray-400" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+       </div><input type="text" id="main-search" class="search-input block w-full pl-10 pr-12 py-4 border border-gray-300 rounded-xl text-lg placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Rechercher un bien à Bouaké..."> <button class="absolute inset-y-0 right-0 pr-3 flex items-center"> <span class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"> Rechercher </span> </button>
       </div>
-      <div class="property-card">
-        <img src="https://source.unsplash.com/featured/?interior,modern" alt="Appartement premium">
-        <div class="property-info">
-          <h3>Appartement Premium — Kennedy</h3>
-          <p class="status occupied">Occupé</p>
-        </div>
-      </div>
+     </div><!-- Filtres rapides -->
+     <div class="flex flex-wrap justify-center gap-3"><span id="filter-label" class="text-sm font-medium text-gray-700 self-center mr-2">Filtrer par :</span> <button class="filter-btn px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-sm font-medium transition-colors" data-filter="type"> Type de bien </button> <button class="filter-btn px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-sm font-medium transition-colors" data-filter="price"> Prix </button> <button class="filter-btn px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-sm font-medium transition-colors" data-filter="location"> Quartier </button> <button class="filter-btn px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-sm font-medium transition-colors" data-filter="rooms"> Nombre de pièces </button>
+     </div>
     </div>
-  </section>
+   </header><!-- Panneau de filtres détaillés -->
+   <div id="filter-panel" class="bg-white border-b shadow-sm hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div><label class="block text-sm font-medium text-gray-700 mb-2">Type de bien</label> <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"> <option value="">Tous</option> <option value="residence-meublee">Résidence meublée</option> <option value="espace-evenementiel">Espace événementiel</option> <option value="hotel">Hôtel</option> </select>
+      </div>
+      <div><label class="block text-sm font-medium text-gray-700 mb-2">Prix maximum</label> <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"> <option value="">Pas de limite</option> <option value="15000">15 000 FCFA</option> <option value="50000">50 000 FCFA</option> <option value="100000">100 000 FCFA</option> <option value="200000">200 000 FCFA</option> <option value="300000">300 000 FCFA</option> <option value="500000">500 000 FCFA</option> </select>
+      </div>
+      <div><label class="block text-sm font-medium text-gray-700 mb-2">Quartier</label> <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"> <option value="">Tous les quartiers</option> <option value="belleville">Belleville</option> <option value="kennedy">Kennedy</option> <option value="airfrance">Air France</option> <option value="commerce">Commerce</option> <option value="ahougnanssou">Ahougnanssou</option> </select>
+      </div>
+      <div><label class="block text-sm font-medium text-gray-700 mb-2">Pièces</label> <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"> <option value="">Indifférent</option> <option value="studio">Studio</option> <option value="2">2 pièces</option> <option value="3">3 pièces</option> <option value="4">4 pièces et plus</option> </select>
+      </div>
+     </div>
+     <div class="mt-4 flex justify-end space-x-3"><button class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">Réinitialiser</button> <button class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">Appliquer les filtres</button>
+     </div>
+    </div>
+   </div><!-- Résultats -->
+   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><!-- Toggle Carte/Liste -->
+    <div class="flex justify-center mb-6">
+     <div class="bg-white rounded-lg p-1 shadow-sm border"><button id="show-list" class="px-6 py-2 bg-blue-600 text-white rounded-md font-medium transition-colors"> 📋 Liste des biens </button> <button id="show-map" class="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-md font-medium transition-colors"> 🗺️ Voir sur la carte </button>
+     </div>
+    </div><!-- Vue Carte -->
+    <div id="map-view" class="hidden mb-8">
+     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div class="p-4 border-b">
+       <h2 class="text-xl font-bold text-gray-900">Localisation des biens à Bouaké</h2>
+       <p class="text-gray-600">Cliquez sur les marqueurs pour voir les détails</p>
+      </div>
+      <div id="map-container" class="h-96 bg-gray-100 relative overflow-hidden"><!-- Carte stylisée de Bouaké -->
+       <div class="absolute inset-0 bg-gradient-to-br from-green-100 to-blue-100"><!-- Rivières et routes principales -->
+        <svg class="absolute inset-0 w-full h-full" viewbox="0 0 400 300"><!-- Rivière Bandama --> <path d="M0 150 Q100 140 200 160 T400 150" stroke="#4A90E2" stroke-width="3" fill="none" opacity="0.6" /> <!-- Routes principales --> <path d="M0 100 L400 120" stroke="#666" stroke-width="2" opacity="0.4" /> <path d="M200 0 L220 300" stroke="#666" stroke-width="2" opacity="0.4" /> <path d="M0 200 L400 180" stroke="#666" stroke-width="2" opacity="0.4" />
+        </svg><!-- Quartiers de Bouaké -->
+        <div class="absolute top-4 left-4 bg-white px-2 py-1 rounded text-xs font-medium shadow">
+         Belleville
+        </div>
+        <div class="absolute top-16 right-8 bg-white px-2 py-1 rounded text-xs font-medium shadow">
+         Kennedy
+        </div>
+        <div class="absolute bottom-20 left-8 bg-white px-2 py-1 rounded text-xs font-medium shadow">
+         Air France
+        </div>
+        <div class="absolute bottom-8 right-16 bg-white px-2 py-1 rounded text-xs font-medium shadow">
+         Commerce
+        </div>
+        <div class="absolute top-32 left-32 bg-white px-2 py-1 rounded text-xs font-medium shadow">
+         Ahougnanssou
+        </div><!-- Marqueurs des biens --> <!-- Bien 1 - Belleville -->
+        <div class="property-marker absolute top-8 left-12 cursor-pointer transform hover:scale-110 transition-transform" data-property="0" data-lat="7.6898" data-lng="-5.0306">
+         <div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold shadow-lg">
+          1
+         </div>
+         <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-green-500"></div>
+        </div><!-- Bien 2 - Kennedy -->
+        <div class="property-marker absolute top-20 right-12 cursor-pointer transform hover:scale-110 transition-transform" data-property="1" data-lat="7.6945" data-lng="-5.0156">
+         <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold shadow-lg">
+          2
+         </div>
+         <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-blue-500"></div>
+        </div><!-- Bien 3 - Air France -->
+        <div class="property-marker absolute bottom-24 left-12 cursor-pointer transform hover:scale-110 transition-transform" data-property="2" data-lat="7.6756" data-lng="-5.0389">
+         <div class="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold shadow-lg">
+          3
+         </div>
+         <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-purple-500"></div>
+        </div><!-- Bien 4 - Commerce -->
+        <div class="property-marker absolute bottom-12 right-20 cursor-pointer transform hover:scale-110 transition-transform" data-property="3" data-lat="7.6823" data-lng="-5.0198">
+         <div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold shadow-lg">
+          4
+         </div>
+         <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-red-500"></div>
+        </div><!-- Bien 5 - Belleville -->
+        <div class="property-marker absolute top-16 left-24 cursor-pointer transform hover:scale-110 transition-transform" data-property="4" data-lat="7.6912" data-lng="-5.0278">
+         <div class="bg-gray-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold shadow-lg">
+          5
+         </div>
+         <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-500"></div>
+        </div><!-- Bien 6 - Air France -->
+        <div class="property-marker absolute bottom-32 left-20 cursor-pointer transform hover:scale-110 transition-transform" data-property="5" data-lat="7.6778" data-lng="-5.0345">
+         <div class="bg-yellow-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold shadow-lg">
+          6
+         </div>
+         <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-yellow-500"></div>
+        </div>
+       </div><!-- Popup d'information -->
+       <div id="property-popup" class="absolute bottom-4 left-4 right-4 bg-white rounded-lg shadow-xl p-4 hidden transform transition-all duration-300">
+        <div class="flex justify-between items-start mb-2">
+         <h3 id="popup-title" class="font-bold text-lg text-gray-900"></h3><button id="close-popup" class="text-gray-400 hover:text-gray-600">
+          <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg></button>
+        </div>
+        <div class="flex justify-between items-center mb-2"><span id="popup-price" class="text-xl font-bold text-blue-600"></span> <span id="popup-status" class="px-2 py-1 rounded-full text-xs font-medium"></span>
+        </div>
+        <p id="popup-location" class="text-gray-600 text-sm mb-2"></p>
+        <p id="popup-description" class="text-gray-700 text-sm mb-3"></p>
+        <div class="flex space-x-2"><button id="popup-details" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Voir détails </button> <a id="popup-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+          </svg><span>WhatsApp</span> </a>
+        </div>
+       </div><!-- Légende -->
+       <div class="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-3">
+        <h4 class="font-medium text-sm text-gray-900 mb-2">Légende</h4>
+        <div class="space-y-1 text-xs">
+         <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 bg-green-500 rounded-full"></div><span>Résidence meublée</span>
+         </div>
+         <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 bg-blue-500 rounded-full"></div><span>Espace événementiel</span>
+         </div>
+         <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 bg-purple-500 rounded-full"></div><span>Hôtel</span>
+         </div>
+         <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 bg-red-500 rounded-full"></div><span>Duplex</span>
+         </div>
+         <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 bg-gray-500 rounded-full"></div><span>Non disponible</span>
+         </div>
+         <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 bg-yellow-500 rounded-full"></div><span>Villa</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Vue Liste -->
+    <div id="list-view"><!-- En-tête des résultats -->
+     <div class="flex justify-between items-center mb-6">
+      <div>
+       <h1 id="results-title" class="text-2xl font-bold text-gray-900">Biens disponibles à Bouaké</h1>
+       <p class="text-gray-600 mt-1"><span id="results-count">24</span> biens trouvés</p>
+      </div>
+      <div class="flex items-center space-x-4"><span class="text-sm text-gray-600">Trier par :</span> <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"> <option>Prix croissant</option> <option>Prix décroissant</option> <option>Plus récent</option> <option>Surface</option> </select>
+       <div class="flex border border-gray-300 rounded-lg"><button id="grid-view" class="p-2 bg-blue-600 text-white rounded-l-lg">
+         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+         </svg></button> <button id="list-view-btn" class="p-2 bg-white text-gray-600 rounded-r-lg border-l">
+         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+         </svg></button>
+       </div>
+      </div>
+     </div><!-- Grille des biens -->
+     <div id="properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Bien 1 avec votre image -->
+      <div class="property-card bg-white rounded-xl shadow-md overflow-hidden">
+       <div class="relative"><img src="https://scontent.fabj8-1.fna.fbcdn.net/v/t39.30808-6/487506214_900_n.jpg?stp=dst-jpg_p180x540_tt6&amp;_nc_cat=106&amp;ccb=1-7&amp;_nc_sid=833d8c&amp;_nc_ohc=f6Y-ghxlG-MQ7kNvwFEE-xF&amp;_nc_oc=AdlxEuB5yuJpeAtJ0XFZP75fJu9rjqaMS3SlR8_TCM6KdOROt1QVubH9k8kEJ_EY3HQM8LzeOha0OVtQ28Gd7z6M&amp;_nc_zt=23&amp;_nc_ht=scontent.fabj8-1.fna&amp;_nc_gid=89vzfmiFCxntieuMROpw7g&amp;oh=00_Afc-5C59Gmyn9nV8djyrUwJ_h7Vbg_4Eb0dOxGSH2qzyWg&amp;oe=6909DAFA" alt="Résidence Meublée Akwaba Living" class="h-48 w-full object-cover" onerror="this.src=''; this.alt='Image non disponible'; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 items-center justify-center hidden">
+         <svg class="w-12 h-12 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+         </svg>
+        </div>
+        <div class="absolute top-3 left-3"><span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Disponible</span>
+        </div>
+        <div class="absolute top-3 right-3"><button class="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+       </div>
+       <div class="p-5">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="text-lg font-semibold text-gray-900">Résidence Meublée</h3><span class="text-xl font-bold text-blue-600">45 000 FCFA</span>
+        </div>
+        <p class="text-gray-600 text-sm mb-3">📍 Belleville • 40m² • Entièrement meublé</p>
+        <p class="text-gray-700 text-sm mb-4">Résidence moderne avec mobilier complet, climatisation, wifi inclus. Sécurité 24h/24...</p>
+        <div class="flex space-x-2"><button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Voir détails </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+          </svg><span>WhatsApp</span> </a>
+        </div>
+       </div>
+      </div><!-- Bien 2 -->
+      <div class="property-card bg-white rounded-xl shadow-md overflow-hidden">
+       <div class="relative">
+        <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+         <svg class="w-12 h-12 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg>
+        </div>
+        <div class="absolute top-3 left-3"><span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Disponible</span>
+        </div>
+        <div class="absolute top-3 right-3"><button class="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+       </div>
+       <div class="p-5">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="text-lg font-semibold text-gray-900">Espace Événementiel</h3><span class="text-xl font-bold text-blue-600">150 000 FCFA</span>
+        </div>
+        <p class="text-gray-600 text-sm mb-3">📍 Kennedy • 200m² • Capacité 150 personnes</p>
+        <p class="text-gray-700 text-sm mb-4">Salle de réception moderne avec scène, sonorisation, éclairage professionnel. Parking 50 places...</p>
+        <div class="flex space-x-2"><button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Voir détails </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+          </svg><span>WhatsApp</span> </a>
+        </div>
+       </div>
+      </div><!-- Bien 3 -->
+      <div class="property-card bg-white rounded-xl shadow-md overflow-hidden">
+       <div class="relative">
+        <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+         <svg class="w-12 h-12 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+         </svg>
+        </div>
+        <div class="absolute top-3 left-3"><span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Disponible</span>
+        </div>
+        <div class="absolute top-3 right-3"><button class="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+       </div>
+       <div class="p-5">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="text-lg font-semibold text-gray-900">Hôtel Boutique</h3><span class="text-xl font-bold text-blue-600">25 000 FCFA</span>
+        </div>
+        <p class="text-gray-600 text-sm mb-3">📍 Air France • 20 chambres • 3 étoiles</p>
+        <p class="text-gray-700 text-sm mb-4">Hôtel moderne avec restaurant, piscine, wifi gratuit. Service 24h/24, proche aéroport...</p>
+        <div class="flex space-x-2"><button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Voir détails </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+          </svg><span>WhatsApp</span> </a>
+        </div>
+       </div>
+      </div><!-- Bien 4 -->
+      <div class="property-card bg-white rounded-xl shadow-md overflow-hidden">
+       <div class="relative">
+        <div class="h-48 bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
+         <svg class="w-12 h-12 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+         </svg>
+        </div>
+        <div class="absolute top-3 left-3"><span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Disponible</span>
+        </div>
+        <div class="absolute top-3 right-3"><button class="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+       </div>
+       <div class="p-5">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="text-lg font-semibold text-gray-900">Duplex F2</h3><span class="text-xl font-bold text-blue-600">150 000 FCFA</span>
+        </div>
+        <p class="text-gray-600 text-sm mb-3">📍 Commerce • 55m² • 1 chambre</p>
+        <p class="text-gray-700 text-sm mb-4">Duplex moderne avec mezzanine, proche marché. Hypercentre, tous commerces à proximité...</p>
+        <div class="flex space-x-2"><button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Voir détails </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+          </svg><span>WhatsApp</span> </a>
+        </div>
+       </div>
+      </div><!-- Bien 5 -->
+      <div class="property-card bg-white rounded-xl shadow-md overflow-hidden">
+       <div class="relative">
+        <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center">
+         <svg class="w-12 h-12 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+         </svg>
+        </div>
+        <div class="absolute top-3 left-3"><span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium">Loué</span>
+        </div>
+        <div class="absolute top-3 right-3"><button class="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+       </div>
+       <div class="p-5">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="text-lg font-semibold text-gray-900">Appartement F2</h3><span class="text-xl font-bold text-blue-600">100 000 FCFA</span>
+        </div>
+        <p class="text-gray-600 text-sm mb-3">📍 Belleville • 45m² • 1 chambre</p>
+        <p class="text-gray-700 text-sm mb-4">Charmant F2 rénové, proche transports. Balcon avec vue dégagée, parking inclus...</p>
+        <div class="flex space-x-2"><button class="flex-1 bg-gray-400 text-white py-2 px-4 rounded-lg text-sm font-medium cursor-not-allowed" disabled> Non disponible </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-orange-500 hover:border-orange-600 text-orange-600 hover:text-orange-700 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+          </svg><span>Liste d'attente</span> </a>
+        </div>
+       </div>
+      </div><!-- Bien 6 -->
+      <div class="property-card bg-white rounded-xl shadow-md overflow-hidden">
+       <div class="relative">
+        <div class="h-48 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+         <svg class="w-12 h-12 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+         </svg>
+        </div>
+        <div class="absolute top-3 left-3"><span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">Disponible</span>
+        </div>
+        <div class="absolute top-3 right-3"><button class="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+       </div>
+       <div class="p-5">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="text-lg font-semibold text-gray-900">Villa F5</h3><span class="text-xl font-bold text-blue-600">300 000 FCFA</span>
+        </div>
+        <p class="text-gray-600 text-sm mb-3">📍 Air France • 110m² • 4 chambres</p>
+        <p class="text-gray-700 text-sm mb-4">Grande villa familiale avec cour, garage double. Quartier calme, proche écoles...</p>
+        <div class="flex space-x-2"><button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Voir détails </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+          </svg><span>WhatsApp</span> </a>
+        </div>
+       </div>
+      </div>
+     </div><!-- Message aucun résultat (caché par défaut) -->
+     <div id="no-results" class="text-center py-12 hidden">
+      <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+      </svg>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun bien trouvé</h3>
+      <p id="no-results-text" class="text-gray-600">Essayez de modifier vos critères de recherche</p>
+     </div><!-- Pagination -->
+     <div class="flex justify-center mt-12">
+      <nav class="flex items-center space-x-2"><button class="px-3 py-2 text-gray-500 hover:text-gray-700 transition-colors">
+        <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg></button> <button class="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium">1</button> <button class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">2</button> <button class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">3</button> <span class="px-2 text-gray-500">...</span> <button class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">8</button> <button class="px-3 py-2 text-gray-500 hover:text-gray-700 transition-colors">
+        <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg></button>
+      </nav>
+     </div>
+    </div>
+   </main>
+  </div>
+  <script>
+        // Configuration par défaut
+        const defaultConfig = {
+            search_placeholder: "Rechercher un bien à Bouaké...",
+            filter_label: "Filtrer par :",
+            results_title: "Biens disponibles à Bouaké",
+            no_results_text: "Essayez de modifier vos critères de recherche",
+            background_color: "#f9fafb",
+            primary_color: "#2563eb",
+            accent_color: "#f97316",
+            text_color: "#111827",
+            surface_color: "#ffffff",
+            font_family: "Inter",
+            font_size: 16
+        };
 
-  <section class="section" id="paiement">
-    <h2>Paiements</h2>
-    <p>Vous pouvez régler via :</p>
-    <ul>
-      <li>Wave : <strong>07 88 03 35 35</strong></li>
-      <li>Orange Money : <strong>07 88 03 35 35</strong></li>
-    </ul>
-    <p>Réservation uniquement via WhatsApp.</p>
-  </section>
-</body>
+        // Données des propriétés pour la carte
+        const propertiesData = [
+            {
+                title: "Résidence Meublée",
+                price: "45 000 FCFA",
+                location: "📍 Belleville • 40m² • Entièrement meublé",
+                description: "Résidence moderne avec mobilier complet, climatisation, wifi inclus. Sécurité 24h/24...",
+                status: "Disponible",
+                statusClass: "bg-green-500 text-white",
+                available: true
+            },
+            {
+                title: "Espace Événementiel",
+                price: "150 000 FCFA",
+                location: "📍 Kennedy • 200m² • Capacité 150 personnes",
+                description: "Salle de réception moderne avec scène, sonorisation, éclairage professionnel. Parking 50 places...",
+                status: "Disponible",
+                statusClass: "bg-green-500 text-white",
+                available: true
+            },
+            {
+                title: "Hôtel Boutique",
+                price: "25 000 FCFA",
+                location: "📍 Air France • 20 chambres • 3 étoiles",
+                description: "Hôtel moderne avec restaurant, piscine, wifi gratuit. Service 24h/24, proche aéroport...",
+                status: "Disponible",
+                statusClass: "bg-green-500 text-white",
+                available: true
+            },
+            {
+                title: "Duplex F2",
+                price: "150 000 FCFA",
+                location: "📍 Commerce • 55m² • 1 chambre",
+                description: "Duplex moderne avec mezzanine, proche marché. Hypercentre, tous commerces à proximité...",
+                status: "Disponible",
+                statusClass: "bg-green-500 text-white",
+                available: true
+            },
+            {
+                title: "Appartement F2",
+                price: "100 000 FCFA",
+                location: "📍 Belleville • 45m² • 1 chambre",
+                description: "Charmant F2 rénové, proche transports. Balcon avec vue dégagée, parking inclus...",
+                status: "Loué",
+                statusClass: "bg-red-500 text-white",
+                available: false
+            },
+            {
+                title: "Villa F5",
+                price: "300 000 FCFA",
+                location: "📍 Air France • 110m² • 4 chambres",
+                description: "Grande villa familiale avec cour, garage double. Quartier calme, proche écoles...",
+                status: "Disponible",
+                statusClass: "bg-green-500 text-white",
+                available: true
+            }
+        ];
+
+        // Gestion du toggle Carte/Liste
+        document.getElementById('show-list').addEventListener('click', function() {
+            // Activer le bouton liste
+            this.classList.add('bg-blue-600', 'text-white');
+            this.classList.remove('text-gray-600');
+            
+            // Désactiver le bouton carte
+            document.getElementById('show-map').classList.remove('bg-blue-600', 'text-white');
+            document.getElementById('show-map').classList.add('text-gray-600');
+            
+            // Afficher la liste, cacher la carte
+            document.getElementById('list-view').classList.remove('hidden');
+            document.getElementById('map-view').classList.add('hidden');
+        });
+
+        document.getElementById('show-map').addEventListener('click', function() {
+            // Activer le bouton carte
+            this.classList.add('bg-blue-600', 'text-white');
+            this.classList.remove('text-gray-600');
+            
+            // Désactiver le bouton liste
+            document.getElementById('show-list').classList.remove('bg-blue-600', 'text-white');
+            document.getElementById('show-list').classList.add('text-gray-600');
+            
+            // Afficher la carte, cacher la liste
+            document.getElementById('map-view').classList.remove('hidden');
+            document.getElementById('list-view').classList.add('hidden');
+        });
+
+        // Gestion des marqueurs de la carte
+        document.querySelectorAll('.property-marker').forEach(marker => {
+            marker.addEventListener('click', function() {
+                const propertyIndex = parseInt(this.dataset.property);
+                const property = propertiesData[propertyIndex];
+                
+                // Remplir le popup avec les données
+                document.getElementById('popup-title').textContent = property.title;
+                document.getElementById('popup-price').textContent = property.price;
+                document.getElementById('popup-location').textContent = property.location;
+                document.getElementById('popup-description').textContent = property.description;
+                
+                const statusElement = document.getElementById('popup-status');
+                statusElement.textContent = property.status;
+                statusElement.className = `px-2 py-1 rounded-full text-xs font-medium ${property.statusClass}`;
+                
+                // Mettre à jour le lien WhatsApp
+                const whatsappLink = document.getElementById('popup-whatsapp');
+                if (property.available) {
+                    whatsappLink.href = "https://wa.me/2250788033535";
+                    whatsappLink.querySelector('span').textContent = "WhatsApp";
+                    whatsappLink.className = "px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1";
+                } else {
+                    whatsappLink.href = "https://wa.me/2250788033535";
+                    whatsappLink.querySelector('span').textContent = "Liste d'attente";
+                    whatsappLink.className = "px-4 py-2 border border-orange-500 hover:border-orange-600 text-orange-600 hover:text-orange-700 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1";
+                }
+                
+                // Afficher le popup
+                document.getElementById('property-popup').classList.remove('hidden');
+            });
+        });
+
+        // Fermer le popup
+        document.getElementById('close-popup').addEventListener('click', function() {
+            document.getElementById('property-popup').classList.add('hidden');
+        });
+
+        // Gestion des filtres
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Toggle active state
+                this.classList.toggle('active');
+                
+                // Show/hide filter panel
+                const filterPanel = document.getElementById('filter-panel');
+                const hasActiveFilters = document.querySelector('.filter-btn.active');
+                
+                if (hasActiveFilters) {
+                    filterPanel.classList.remove('hidden');
+                } else {
+                    filterPanel.classList.add('hidden');
+                }
+            });
+        });
+
+        // Gestion de la recherche
+        document.getElementById('main-search').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const properties = document.querySelectorAll('.property-card');
+            let visibleCount = 0;
+
+            properties.forEach(property => {
+                const title = property.querySelector('h3').textContent.toLowerCase();
+                const description = property.querySelector('p:last-of-type').textContent.toLowerCase();
+                const location = property.querySelector('.text-gray-600').textContent.toLowerCase();
+                
+                if (title.includes(query) || description.includes(query) || location.includes(query) || query === '') {
+                    property.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    property.style.display = 'none';
+                }
+            });
+
+            // Update results count
+            document.getElementById('results-count').textContent = visibleCount;
+            
+            // Show/hide no results message
+            const noResults = document.getElementById('no-results');
+            const grid = document.getElementById('properties-grid');
+            
+            if (visibleCount === 0 && query !== '') {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                noResults.classList.add('hidden');
+            }
+        });
+
+        // Gestion des vues (grille/liste)
+        document.getElementById('grid-view').addEventListener('click', function() {
+            this.classList.add('bg-blue-600', 'text-white');
+            this.classList.remove('bg-white', 'text-gray-600');
+            
+            document.getElementById('list-view-btn').classList.remove('bg-blue-600', 'text-white');
+            document.getElementById('list-view-btn').classList.add('bg-white', 'text-gray-600');
+            
+            document.getElementById('properties-grid').className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
+        });
+
+        document.getElementById('list-view-btn').addEventListener('click', function() {
+            this.classList.add('bg-blue-600', 'text-white');
+            this.classList.remove('bg-white', 'text-gray-600');
+            
+            document.getElementById('grid-view').classList.remove('bg-blue-600', 'text-white');
+            document.getElementById('grid-view').classList.add('bg-white', 'text-gray-600');
+            
+            document.getElementById('properties-grid').className = 'grid grid-cols-1 gap-4';
+        });
+
+        // Gestion des favoris
+        document.querySelectorAll('.property-card button[class*="rounded-full"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('svg');
+                const isLiked = icon.classList.contains('text-red-500');
+                
+                if (isLiked) {
+                    icon.classList.remove('text-red-500');
+                    icon.classList.add('text-gray-600');
+                    icon.setAttribute('fill', 'none');
+                } else {
+                    icon.classList.remove('text-gray-600');
+                    icon.classList.add('text-red-500');
+                    icon.setAttribute('fill', 'currentColor');
+                }
+            });
+        });
+
+        // Gestion des boutons d'action
+        document.querySelectorAll('.property-card button:not([class*="rounded-full"])').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.disabled) return;
+                
+                const originalText = this.textContent;
+                this.textContent = 'Chargement...';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    if (originalText.includes('Voir détails')) {
+                        this.textContent = 'Détails affichés';
+                        this.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                        this.classList.add('bg-green-600');
+                    }
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.disabled = false;
+                        
+                        if (originalText.includes('Voir détails')) {
+                            this.classList.remove('bg-green-600');
+                            this.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                        }
+                    }, 2000);
+                }, 1000);
+            });
+        });
+
+        // Element SDK configuration
+        async function onConfigChange(config) {
+            const customFont = config.font_family || defaultConfig.font_family;
+            const baseSize = config.font_size || defaultConfig.font_size;
+            const baseFontStack = 'system-ui, -apple-system, sans-serif';
+
+            // Update text content
+            document.getElementById('main-search').placeholder = config.search_placeholder || defaultConfig.search_placeholder;
+            document.getElementById('filter-label').textContent = config.filter_label || defaultConfig.filter_label;
+            document.getElementById('results-title').textContent = config.results_title || defaultConfig.results_title;
+            document.getElementById('no-results-text').textContent = config.no_results_text || defaultConfig.no_results_text;
+
+            // Update colors
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+
+            document.body.style.backgroundColor = backgroundColor;
+            document.body.style.color = textColor;
+
+            // Update fonts
+            document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+            document.getElementById('results-title').style.fontSize = `${baseSize * 1.5}px`;
+            document.querySelectorAll('h3').forEach(h3 => {
+                h3.style.fontSize = `${baseSize * 1.125}px`;
+            });
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities: (config) => ({
+                    recolorables: [
+                        {
+                            get: () => config.background_color || defaultConfig.background_color,
+                            set: (value) => {
+                                config.background_color = value;
+                                window.elementSdk.setConfig({ background_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.primary_color || defaultConfig.primary_color,
+                            set: (value) => {
+                                config.primary_color = value;
+                                window.elementSdk.setConfig({ primary_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.accent_color || defaultConfig.accent_color,
+                            set: (value) => {
+                                config.accent_color = value;
+                                window.elementSdk.setConfig({ accent_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.text_color || defaultConfig.text_color,
+                            set: (value) => {
+                                config.text_color = value;
+                                window.elementSdk.setConfig({ text_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.surface_color || defaultConfig.surface_color,
+                            set: (value) => {
+                                config.surface_color = value;
+                                window.elementSdk.setConfig({ surface_color: value });
+                            }
+                        }
+                    ],
+                    borderables: [],
+                    fontEditable: {
+                        get: () => config.font_family || defaultConfig.font_family,
+                        set: (value) => {
+                            config.font_family = value;
+                            window.elementSdk.setConfig({ font_family: value });
+                        }
+                    },
+                    fontSizeable: {
+                        get: () => config.font_size || defaultConfig.font_size,
+                        set: (value) => {
+                            config.font_size = value;
+                            window.elementSdk.setConfig({ font_size: value });
+                        }
+                    }
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ["search_placeholder", config.search_placeholder || defaultConfig.search_placeholder],
+                    ["filter_label", config.filter_label || defaultConfig.filter_label],
+                    ["results_title", config.results_title || defaultConfig.results_title],
+                    ["no_results_text", config.no_results_text || defaultConfig.no_results_text]
+                ])
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'996fd10736a9b7b6',t:'MTc2MTg3ODcyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
