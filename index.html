@@ -101,7 +101,149 @@
      <div class="mt-4 flex justify-end space-x-3"><button class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">Réinitialiser</button> <button class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">Appliquer les filtres</button>
      </div>
     </div>
-   </div><!-- Résultats -->
+   </div><!-- Section Découvrez Bouaké -->
+   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-b">
+    <div class="text-center mb-8">
+     <h2 class="text-3xl font-bold text-gray-900 mb-4">🌟 Découvrez Bouaké</h2>
+     <p class="text-lg text-gray-600">Explorez les meilleurs endroits de la ville avec nos guides locaux</p>
+    </div><!-- Toggle Propriétés/Excursions -->
+    <div class="flex justify-center mb-6">
+     <div class="bg-white rounded-lg p-1 shadow-sm border"><button id="show-properties" class="px-6 py-2 bg-blue-600 text-white rounded-md font-medium transition-colors"> 🏠 Biens immobiliers </button> <button id="show-excursions" class="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-md font-medium transition-colors"> 🗺️ Excursions &amp; Visites </button>
+     </div>
+    </div><!-- Section Excursions (cachée par défaut) -->
+    <div id="excursions-section" class="hidden">
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"><!-- Restaurant Le Palmier -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+       <div class="h-48 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center relative">
+        <svg class="w-16 h-16 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+        </svg>
+        <div class="absolute top-3 left-3"><span class="bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">🍽️ Restaurant</span>
+        </div>
+       </div>
+       <div class="p-5">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Restaurant Le Palmier</h3>
+        <p class="text-gray-600 text-sm mb-3">📍 Centre-ville • Cuisine ivoirienne authentique</p>
+        <p class="text-gray-700 text-sm mb-4">Spécialités locales dans un cadre traditionnel. Attiéké, poisson braisé, sauce graine. Ambiance chaleureuse...</p>
+        <div class="flex justify-between items-center mb-3"><span class="text-yellow-500 flex items-center"> ⭐⭐⭐⭐⭐ <span class="text-gray-600 text-sm ml-1">(4.8/5)</span> </span> <span class="text-green-600 font-medium">15 000 - 25 000 FCFA</span>
+        </div>
+        <div class="flex space-x-2"><button class="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Réserver une table </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors"> WhatsApp </a>
+        </div>
+       </div>
+      </div><!-- Parc de la Paix -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+       <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center relative">
+        <svg class="w-16 h-16 text-white" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+        </svg>
+        <div class="absolute top-3 left-3"><span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">🌳 Parc</span>
+        </div>
+       </div>
+       <div class="p-5">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Parc de la Paix</h3>
+        <p class="text-gray-600 text-sm mb-3">📍 Quartier Administratif • 5 hectares d'espaces verts</p>
+        <p class="text-gray-700 text-sm mb-4">Grand parc urbain avec aires de jeux, fontaines, sentiers de promenade. Idéal pour pique-niques familiaux...</p>
+        <div class="flex justify-between items-center mb-3"><span class="text-yellow-500 flex items-center"> ⭐⭐⭐⭐⭐ <span class="text-gray-600 text-sm ml-1">(4.6/5)</span> </span> <span class="text-green-600 font-medium">Gratuit</span>
+        </div>
+        <div class="flex space-x-2"><button class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Planifier visite </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors"> Guide </a>
+        </div>
+       </div>
+      </div><!-- Maquis Chez Tantine -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+       <div class="h-48 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center relative">
+        <svg class="w-16 h-16 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div class="absolute top-3 left-3"><span class="bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-medium">🍻 Maquis</span>
+        </div>
+       </div>
+       <div class="p-5">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Maquis Chez Tantine</h3>
+        <p class="text-gray-600 text-sm mb-3">📍 Belleville • Ambiance conviviale et authentique</p>
+        <p class="text-gray-700 text-sm mb-4">Maquis traditionnel avec grillades, bière fraîche, musique live le weekend. Terrasse ombragée...</p>
+        <div class="flex justify-between items-center mb-3"><span class="text-yellow-500 flex items-center"> ⭐⭐⭐⭐⭐ <span class="text-gray-600 text-sm ml-1">(4.7/5)</span> </span> <span class="text-green-600 font-medium">8 000 - 15 000 FCFA</span>
+        </div>
+        <div class="flex space-x-2"><button class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Voir le menu </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors"> Réserver </a>
+        </div>
+       </div>
+      </div><!-- Bar Le Baobab -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+       <div class="h-48 bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center relative">
+        <svg class="w-16 h-16 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+        <div class="absolute top-3 left-3"><span class="bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">🍸 Bar</span>
+        </div>
+       </div>
+       <div class="p-5">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Bar Le Baobab</h3>
+        <p class="text-gray-600 text-sm mb-3">📍 Kennedy • Bar lounge moderne</p>
+        <p class="text-gray-700 text-sm mb-4">Bar tendance avec cocktails créatifs, DJ sets, terrasse panoramique. Ambiance branchée en soirée...</p>
+        <div class="flex justify-between items-center mb-3"><span class="text-yellow-500 flex items-center"> ⭐⭐⭐⭐⭐ <span class="text-gray-600 text-sm ml-1">(4.5/5)</span> </span> <span class="text-green-600 font-medium">5 000 - 12 000 FCFA</span>
+        </div>
+        <div class="flex space-x-2"><button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Carte des cocktails </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors"> Réserver </a>
+        </div>
+       </div>
+      </div><!-- Centre de Bien-être Serenity -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+       <div class="h-48 bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center relative">
+        <svg class="w-16 h-16 text-white" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd" />
+        </svg>
+        <div class="absolute top-3 left-3"><span class="bg-teal-500 text-white px-2 py-1 rounded-full text-xs font-medium">💆 Détente</span>
+        </div>
+       </div>
+       <div class="p-5">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Centre Serenity Spa</h3>
+        <p class="text-gray-600 text-sm mb-3">📍 Air France • Spa &amp; bien-être</p>
+        <p class="text-gray-700 text-sm mb-4">Centre de détente avec massages, soins du visage, jacuzzi, sauna. Cadre zen et relaxant...</p>
+        <div class="flex justify-between items-center mb-3"><span class="text-yellow-500 flex items-center"> ⭐⭐⭐⭐⭐ <span class="text-gray-600 text-sm ml-1">(4.9/5)</span> </span> <span class="text-green-600 font-medium">20 000 - 50 000 FCFA</span>
+        </div>
+        <div class="flex space-x-2"><button class="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Nos soins </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors"> Réserver </a>
+        </div>
+       </div>
+      </div><!-- Lac aux Caïmans -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+       <div class="h-48 bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center relative">
+        <svg class="w-16 h-16 text-white" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+        </svg>
+        <div class="absolute top-3 left-3"><span class="bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-medium">🏞️ Nature</span>
+        </div>
+       </div>
+       <div class="p-5">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Lac aux Caïmans</h3>
+        <p class="text-gray-600 text-sm mb-3">📍 15 km de Bouaké • Site naturel exceptionnel</p>
+        <p class="text-gray-700 text-sm mb-4">Excursion nature vers ce lac sacré, observation de la faune, pique-nique, guide local inclus...</p>
+        <div class="flex justify-between items-center mb-3"><span class="text-yellow-500 flex items-center"> ⭐⭐⭐⭐⭐ <span class="text-gray-600 text-sm ml-1">(4.8/5)</span> </span> <span class="text-green-600 font-medium">25 000 FCFA/pers</span>
+        </div>
+        <div class="flex space-x-2"><button class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"> Réserver excursion </button> <a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="px-4 py-2 border border-green-500 hover:border-green-600 text-green-600 hover:text-green-700 rounded-lg text-sm font-medium transition-colors"> Infos </a>
+        </div>
+       </div>
+      </div>
+     </div><!-- Packages touristiques -->
+     <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white mb-8">
+      <div class="text-center">
+       <h3 class="text-2xl font-bold mb-4">🎯 Packages Découverte Bouaké</h3>
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+         <h4 class="font-bold text-lg mb-2">🍽️ Package Gastronomie</h4>
+         <p class="text-sm mb-3">3 restaurants + 2 maquis + guide culinaire</p>
+         <p class="text-xl font-bold">75 000 FCFA</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+         <h4 class="font-bold text-lg mb-2">🌿 Package Nature &amp; Détente</h4>
+         <p class="text-sm mb-3">Lac aux Caïmans + Spa + Parc de la Paix</p>
+         <p class="text-xl font-bold">95 000 FCFA</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+         <h4 class="font-bold text-lg mb-2">🎉 Package Nightlife</h4>
+         <p class="text-sm mb-3">3 bars + 2 maquis + transport inclus</p>
+         <p class="text-xl font-bold">65 000 FCFA</p>
+        </div>
+       </div>
+       <div class="mt-6"><a href="https://wa.me/2250788033535" target="_blank" rel="noopener noreferrer" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-flex items-center space-x-2">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+         </svg><span>Réserver un package sur WhatsApp</span> </a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Résultats -->
    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><!-- Toggle Carte/Liste -->
     <div class="flex justify-center mb-6">
      <div class="bg-white rounded-lg p-1 shadow-sm border"><button id="show-list" class="px-6 py-2 bg-blue-600 text-white rounded-md font-medium transition-colors"> 📋 Liste des biens </button> <button id="show-map" class="px-6 py-2 text-gray-600 hover:text-gray-800 rounded-md font-medium transition-colors"> 🗺️ Voir sur la carte </button>
@@ -214,7 +356,7 @@
      <div class="flex justify-between items-center mb-6">
       <div>
        <h1 id="results-title" class="text-2xl font-bold text-gray-900">Biens disponibles à Bouaké</h1>
-       <p class="text-gray-600 mt-1"><span id="results-count">24</span> biens trouvés</p>
+       <p class="text-gray-600 mt-1"><span id="results-count">6</span> biens trouvés</p>
       </div>
       <div class="flex items-center space-x-4"><span class="text-sm text-gray-600">Trier par :</span> <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"> <option>Prix croissant</option> <option>Prix décroissant</option> <option>Plus récent</option> <option>Surface</option> </select>
        <div class="flex border border-gray-300 rounded-lg"><button id="grid-view" class="p-2 bg-blue-600 text-white rounded-l-lg">
@@ -225,10 +367,10 @@
        </div>
       </div>
      </div><!-- Grille des biens -->
-     <div id="properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Bien 1 avec votre image -->
+     <div id="properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Bien 1 -->
       <div class="property-card bg-white rounded-xl shadow-md overflow-hidden">
-       <div class="relative"><img src="https://scontent.fabj8-1.fna.fbcdn.net/v/t39.30808-6/487506214_900_n.jpg?stp=dst-jpg_p180x540_tt6&amp;_nc_cat=106&amp;ccb=1-7&amp;_nc_sid=833d8c&amp;_nc_ohc=f6Y-ghxlG-MQ7kNvwFEE-xF&amp;_nc_oc=AdlxEuB5yuJpeAtJ0XFZP75fJu9rjqaMS3SlR8_TCM6KdOROt1QVubH9k8kEJ_EY3HQM8LzeOha0OVtQ28Gd7z6M&amp;_nc_zt=23&amp;_nc_ht=scontent.fabj8-1.fna&amp;_nc_gid=89vzfmiFCxntieuMROpw7g&amp;oh=00_Afc-5C59Gmyn9nV8djyrUwJ_h7Vbg_4Eb0dOxGSH2qzyWg&amp;oe=6909DAFA" alt="Résidence Meublée Akwaba Living" class="h-48 w-full object-cover" onerror="this.src=''; this.alt='Image non disponible'; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 items-center justify-center hidden">
+       <div class="relative">
+        <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
          <svg class="w-12 h-12 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
          </svg>
         </div>
@@ -467,6 +609,35 @@
                 available: true
             }
         ];
+
+        // Gestion du toggle Propriétés/Excursions
+        document.getElementById('show-properties').addEventListener('click', function() {
+            // Activer le bouton propriétés
+            this.classList.add('bg-blue-600', 'text-white');
+            this.classList.remove('text-gray-600');
+            
+            // Désactiver le bouton excursions
+            document.getElementById('show-excursions').classList.remove('bg-blue-600', 'text-white');
+            document.getElementById('show-excursions').classList.add('text-gray-600');
+            
+            // Afficher les propriétés, cacher les excursions
+            document.querySelector('main').classList.remove('hidden');
+            document.getElementById('excursions-section').classList.add('hidden');
+        });
+
+        document.getElementById('show-excursions').addEventListener('click', function() {
+            // Activer le bouton excursions
+            this.classList.add('bg-blue-600', 'text-white');
+            this.classList.remove('text-gray-600');
+            
+            // Désactiver le bouton propriétés
+            document.getElementById('show-properties').classList.remove('bg-blue-600', 'text-white');
+            document.getElementById('show-properties').classList.add('text-gray-600');
+            
+            // Afficher les excursions, cacher les propriétés
+            document.getElementById('excursions-section').classList.remove('hidden');
+            document.querySelector('main').classList.add('hidden');
+        });
 
         // Gestion du toggle Carte/Liste
         document.getElementById('show-list').addEventListener('click', function() {
@@ -754,5 +925,5 @@
             });
         }
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'996fd10736a9b7b6',t:'MTc2MTg3ODcyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'997011a5a693b7b6',t:'MTc2MTg4MTM3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
