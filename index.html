@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kawaka Living — Séjour d'exception à Bouaké</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+      color: #000;
+    }
+    header {
+      background: #000;
+      color: #d4af37;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: #d4af37;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 500;
+    }
+    .hero {
+      background: url('https://source.unsplash.com/featured/?luxury,hotel,interior') center/cover no-repeat;
+      color: #fff;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+      background-color: #000;
+    }
+    .hero h1 {
+      font-size: 48px;
+      margin: 0;
+      color: #d4af37;
+    }
+    .hero p {
+      font-size: 22px;
+      max-width: 500px;
+    }
+    .cta-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #d4af37;
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    .section {
+      padding: 60px 40px;
+    }
+    .properties-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .property-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .property-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .property-info {
+      padding: 15px;
+    }
+    .status {
+      font-weight: bold;
+    }
+    .status.free { color: green; }
+    .status.occupied { color: red; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><strong>Kawaka Living</strong></div>
+    <nav>
+      <a href="#catalogue">Catalogue</a>
+      <a href="#paiement">Paiements</a>
+      <a href="https://wa.me/2270788033535" target="_blank">WhatsApp</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Séjour d'exception à Bouaké</h1>
+    <p>Résidences meublées et suites luxueuses pour un confort inégalé dans les meilleurs quartiers de Bouaké.</p>
+    <a href="https://wa.me/2270788033535" class="cta-button" target="_blank">Réserver via WhatsApp</a>
+  </section>
+
+  <section class="section" id="catalogue">
+    <h2>Biens disponibles</h2>
+    <div class="properties-grid">
+      <div class="property-card">
+        <img src="https://source.unsplash.com/featured/?luxury,apartment" alt="Résidence luxe">
+        <div class="property-info">
+          <h3>Suite Prestige — Belleville</h3>
+          <p class="status free">Libre</p>
+        </div>
+      </div>
+      <div class="property-card">
+        <img src="https://source.unsplash.com/featured/?interior,modern" alt="Appartement premium">
+        <div class="property-info">
+          <h3>Appartement Premium — Kennedy</h3>
+          <p class="status occupied">Occupé</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="paiement">
+    <h2>Paiements</h2>
+    <p>Vous pouvez régler via :</p>
+    <ul>
+      <li>Wave : <strong>07 88 03 35 35</strong></li>
+      <li>Orange Money : <strong>07 88 03 35 35</strong></li>
+    </ul>
+    <p>Réservation uniquement via WhatsApp.</p>
+  </section>
+</body>
+</html>
