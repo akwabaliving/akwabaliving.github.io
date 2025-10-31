@@ -17,7 +17,9 @@
 <input id="loginPassword" placeholder="Mot de passe" type="password"><br>
 <button id="btnLogin">Connexion</button>
 
-<script src="https://unpkg.com/@supabase/supabase-js"></script>
+<!-- ✅ BON script Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 const SUPABASE_URL = "https://qwyoidlplqwijjskefuk.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF3eW9pZGxwbHF3aWpqc2tlZnVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5MDI2OTIsImV4cCI6MjA3NzQ3ODY5Mn0.AUEvo6_Y2BjDv_rB6OI0OiDZcHqMeQEpiC1MuVN2RcA";
@@ -30,13 +32,19 @@ document.getElementById("btnSignup").onclick = async () => {
   const password = document.getElementById("signupPassword").value;
   const name = document.getElementById("signupName").value;
 
-  const { error } = await client.auth.signUp(
-    { email, password },
-    { data: { full_name: name } }
-  );
+  const { data, error } = await client.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { full_name: name }
+    }
+  });
 
-  if (error) alert(error.message);
-  else alert("Compte créé ✅ Vérifiez vos emails !");
+  if (error) {
+    alert("Erreur : " + error.message);
+  } else {
+    alert("Compte créé ✅ Vérifiez votre email !");
+  }
 };
 
 // connexion
