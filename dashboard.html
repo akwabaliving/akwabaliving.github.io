@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Espace Client</title>
+</head>
+<body>
+
+<h2>Bienvenue !</h2>
+<p id="userName"></p>
+
+<button id="logoutBtn">Déconnexion</button>
+
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+<script>
+const SUPABASE_URL = "TON_URL_SUPABASE";
+const SUPABASE_ANON_KEY = "TA_CLE_ANON";
+
+const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function loadUser() {
+  const { data: { user } } = await client.auth.getUser();
+
+  if (!user) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  let { data: profile } = await client
+    .from("users_profile")
+    .select("full_name, role")
+    .eq("id", user.id)
+    .single();
+
+  document.getElementById("userName").textContent =
+    "Bonjour " + (profile?.full_name || "Utilisateur");
+}
+
+document.getElementById("logoutBtn").onclick = async () => {
+  await client.auth.signOut();
+  window.location.href = "index.html";
+};
+
+loadUser();
+</script>
+
+</body>
+</html>
